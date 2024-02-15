@@ -10,3 +10,7 @@ function onInit() {
 function onRemoveBook(){
     return removeBook()
 }
+
+function onUpdateBook(){
+    return updatePrice()
+}

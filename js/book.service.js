@@ -4,8 +4,8 @@ getBooks()
 
 function getBooks() {
     Gbooks = [
-        getBook('jjk', '80'),
-        getBook('jjk s2', '90')
+        getBook('jjk', 80),
+        getBook('jjk s2', 90)
     ]
 }
 
@@ -27,7 +27,7 @@ function render() {
     <td>${book.price}</td>
     <td class="action-buttons">
         <button>Read</button>
-        <button>Update</button>
+        <button onclick="onUpdateBook(event,'${book.id}')">Update</button>
         <button onclick="onRemoveBook('${book.id}')">Delete</button>
     </td>
 </tr>
@@ -43,10 +43,16 @@ function render() {
 
 function removeBook(booId) {
     const bookIdx = Gbooks.findIndex(book => book.id = booId)
-    Gbooks.splice(bookIdx,1)
+    Gbooks.splice(bookIdx, 1)
     render()
 }
 
+function onUpdateBook(ev,booId) {
+    ev.stopPropagation()
+    const bookIdx = Gbooks.findIndex(book => book.id = booId)
+    Gbooks[bookIdx].price =prompt('enter new price pls')
+    render()
+}
 
 function makeId(length = 5) {
     var id = ''
