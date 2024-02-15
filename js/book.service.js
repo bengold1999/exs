@@ -47,12 +47,8 @@ function removeBook(booId) {
     render()
 }
 
-function onUpdateBook(ev,booId) {
-    ev.stopPropagation()
-    const bookIdx = Gbooks.findIndex(book => book.id = booId)
-    Gbooks[bookIdx].price =prompt('enter new price pls')
-    render()
-}
+
+
 
 function makeId(length = 5) {
     var id = ''

@@ -34,3 +34,11 @@ th {
 tr:nth-child(even){
     background-color: #ddd;
 }
+section{
+    background-color: black;
+ }
+ section button{
+    cursor: pointer;
+    width: 100px;
+    height: 100px;
+ }
