@@ -27,3 +27,17 @@ function onAddBook(){
     Gbooks.unshift(newBook)
     render()
 }
+
+function onReadBook(ev,todoId){
+    ev.stopPropagation()
+    const Details = readBook(todoId)
+
+    const elBookDetails = document.querySelector('.Book-details')
+    const elSpan = elBookDetails.querySelector('h3 span')
+    const elPre = elBookDetails.querySelector('pre')
+
+    elPre.innerText = JSON.stringify(Details)
+    elSpan.innerText = Details.title
+    
+    elBookDetails.showModal()
+}

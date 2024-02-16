@@ -27,6 +27,7 @@ function render() {
     <td>${book.price}</td>
     <td class="action-buttons">
         <button>Read</button>
+        <button onclick="onReadBook(event,'${book.id}')">Details</button>
         <button onclick="onUpdateBook(event,'${book.id}')">Update</button>
         <button onclick="onRemoveBook('${book.id}')">Delete</button>
     </td>
@@ -47,7 +48,10 @@ function removeBook(booId) {
     render()
 }
 
-
+function readBook(readId){
+    const read = Gbooks.find(read=>read.id===readId)
+    return read
+}
 
 
 function makeId(length = 5) {
