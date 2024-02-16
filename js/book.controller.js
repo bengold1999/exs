@@ -7,32 +7,35 @@ function onInit() {
 
 
 
-function onRemoveBook(ev,bookId){
+function onRemoveBook(ev, bookId) {
     ev.stopPropagation()
     removeBook(bookId)
     render(Gbooks)
+    showMessage('Book was successfully deleted.')
 }
 
-function onUpdateBook(ev,booId) {
+function onUpdateBook(ev, booId) {
     ev.stopPropagation()
     const bookIdx = Gbooks.findIndex(book => book.id = booId)
-    Gbooks[bookIdx].price =prompt('enter new price pls')
+    Gbooks[bookIdx].price = prompt('enter new price pls')
     render(Gbooks)
+    showMessage('Book was successfully update.')
 }
 
 
 
-function onAddBook(ev){
+function onAddBook(ev) {
     ev.preventDefault()
     const elInput = document.querySelector('.add')
     if (!elInput.value) return
     const newPrice = prompt('enter a price pls')
-    addBook(elInput.value,newPrice)
-    elInput.value=''
+    addBook(elInput.value, newPrice)
+    elInput.value = ''
     render(Gbooks)
+    showMessage('Book was successfully added.')
 }
 
-function onReadBook(ev,todoId){
+function onReadBook(ev, todoId) {
     ev.stopPropagation()
     const Details = readBook(todoId)
 
@@ -42,28 +45,39 @@ function onReadBook(ev,todoId){
 
     elPre.innerText = JSON.stringify(Details)
     elSpan.innerText = Details.title
-    
+
     elBookDetails.showModal()
 }
 
-function Onsearch(elSearch){
+function Onsearch(elSearch) {
     const value = elSearch.value.toLowerCase()
     const filteredBooks = sBook(value)
     render(filteredBooks)
     // console.log(JSON.parse(titleSearch))
-    
-    
-   
+
+
+
 }
 
 
-function clearSearch(){
+function clearSearch() {
     var elInput = document.querySelector('.search')
     elInput.value = ''
-    if(elInput.value==='')render(Gbooks)
-    
+    if (elInput.value === '') render(Gbooks)
+
 }
 
+
+function stats() {
+    var elExp = document.querySelector('.expensive')
+    console.log(elExp)
+    var elAvg = document.querySelector('.average')
+    var elChp = document.querySelector('.cheap')
+
+    elExp.innerText = expensiveBook()
+    elAvg.innerText = avgBook()
+    elChp.innerText = cheapBook()
+}
 
 // function onCloseModal(){
 //     const elBookDetails = document.querySelector('.Book-details')

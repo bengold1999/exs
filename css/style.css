@@ -17,6 +17,7 @@ h1 {
 table {
     width: 100%;
     border-collapse: collapse;
+    flex-grow: 1;
 }
 th, td {
     border: 1px solid #ddd;
@@ -35,10 +36,19 @@ tr:nth-child(even){
     background-color: #ddd;
 }
 section{
-    background-color: black;
+    background-color: rgb(41, 97, 75);
  }
  section button{
     cursor: pointer;
     width: 100px;
     height: 100px;
+ }
+
+ footer{
+    display: flex;
+    flex-grow: 1px;
+    font-size: 30px;
+    background-color: #ddd;
+    gap: 10px;
+    
  }

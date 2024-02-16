@@ -46,10 +46,18 @@ function render(books) {
     console.log(strHtmls.join(''))
     const elRender = document.querySelector('tbody')
     elRender.innerHTML = strHtmls.join('')
-
+    stats()
 }
 
-
+function showMessage(message) {
+    const messageContainer = document.querySelector('.message')
+    const messagespan = messageContainer.querySelector('span')
+    messagespan.innerText = message
+    messageContainer.showModal()
+    setTimeout(() => {
+        messageContainer.close()
+    }, 2000);
+}
 
 function removeBook(booId) {
     const bookIdx = Gbooks.findIndex(book => book.id = booId)
@@ -71,6 +79,16 @@ function addBook(elInput, newPrice) {
     const newBook = _getBook(elInput, newPrice)
     Gbooks.unshift(newBook)
     _saveBooks()
+}
+
+function expensiveBook() {
+    return Gbooks.filter(book => book.price > 200).length
+}
+function avgBook() {
+    return Gbooks.filter(book => book.price > 80 && book.price < 200).length
+}
+function cheapBook() {
+    return Gbooks.filter(book => book.price < 80).length
 }
 
 
