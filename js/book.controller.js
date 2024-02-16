@@ -41,3 +41,7 @@ function onReadBook(ev,todoId){
     
     elBookDetails.showModal()
 }
+// function onCloseModal(){
+//     const elBookDetails = document.querySelector('.Book-details')
+//     elBookDetails.closeModal()
+// }
