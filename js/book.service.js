@@ -1,16 +1,23 @@
 'use strict'
+var book_dt = 'book_dt'
 var Gbooks
-getBooks()
+_getBooks()
+var emty =[]
 
-function getBooks() {
-    Gbooks = [
-        getBook('jjk', 80),
-        getBook('jjk s2', 90)
-    ]
+function _getBooks() {
+    Gbooks = loadFromStorage(book_dt)
+    console.log(Gbooks)
+    if (!Gbooks) {
+        Gbooks = [
+            _getBook('jjk', 80),
+            _getBook('jjk s2', 90)
+        ]
+        _saveBooks()
+    }
 }
 
 
-function getBook(title, price) {
+function _getBook(title, price) {
     return {
         id: makeId(),
         title,
@@ -29,7 +36,7 @@ function render() {
         <button>Read</button>
         <button onclick="onReadBook(event,'${book.id}')">Details</button>
         <button onclick="onUpdateBook(event,'${book.id}')">Update</button>
-        <button onclick="onRemoveBook('${book.id}')">Delete</button>
+        <button onclick="onRemoveBook(event,'${book.id}')">Delete</button>
     </td>
 </tr>
     `)
@@ -45,13 +52,25 @@ function render() {
 function removeBook(booId) {
     const bookIdx = Gbooks.findIndex(book => book.id = booId)
     Gbooks.splice(bookIdx, 1)
-    render()
+    _saveBooks()
 }
 
-function readBook(readId){
-    const read = Gbooks.find(read=>read.id===readId)
+function readBook(readId) {
+    const read = Gbooks.find(read => read.id === readId)
     return read
 }
+
+
+function _saveBooks() {
+    saveToStorage(book_dt, Gbooks)
+}
+
+function addBook(elInput,newPrice){
+    const newBook = _getBook(elInput.value,newPrice)
+    Gbooks.unshift(newBook)
+    _saveBooks()
+}
+
 
 
 function makeId(length = 5) {

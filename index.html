@@ -9,7 +9,7 @@
 <body onload="onInit()">
     <h1>Book shop</h1>
     <section>
-        <button onclick="onAddBook()">Add Book</button>
+        <button onclick="onAddBook(event)">Add Book</button>
         <input type="text">
     </section>
     <table>
@@ -31,6 +31,7 @@
         </form>
     </dialog>
           
+    <script src="js/storage_service.js"></script>
         <script src="js/book.service.js"></script>
         <script src="js/book.controller.js"></script>
     </body>

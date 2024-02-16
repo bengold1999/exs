@@ -7,8 +7,10 @@ function onInit() {
 
 
 
-function onRemoveBook(){
-    return removeBook()
+function onRemoveBook(ev,bookId){
+    ev.stopPropagation()
+    removeBook(bookId)
+    render()
 }
 
 function onUpdateBook(ev,booId) {
@@ -20,11 +22,13 @@ function onUpdateBook(ev,booId) {
 
 
 
-function onAddBook(){
+function onAddBook(ev){
+    ev.preventDefault()
     const elInput = document.querySelector('input')
+    if (!elInput.value) return
     const newPrice = prompt('enter a price pls')
-    const newBook = getBook(elInput.value,newPrice)
-    Gbooks.unshift(newBook)
+    addBook(elInput.value,newPrice)
+    elInput.value=''
     render()
 }
 
