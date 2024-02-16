@@ -2,12 +2,12 @@
 var book_dt = 'book_dt'
 var Gbooks
 _getBooks()
-var emty =[]
+var emty = []
 
 function _getBooks() {
     Gbooks = loadFromStorage(book_dt)
-    console.log(Gbooks)
-    if (!Gbooks) {
+    console.log('gbooks:', Gbooks)
+    if (Gbooks.length === 0) {
         Gbooks = [
             _getBook('jjk', 80),
             _getBook('jjk s2', 90)
@@ -25,16 +25,18 @@ function _getBook(title, price) {
         imgUrl: 'png'
     }
 }
+function sBook(value) {
+    return Gbooks.filter((book) => book.title.toLowerCase().startsWith(value))
+}
 
+function render(books) {
 
-function render() {
-    const strHtmls = Gbooks.map(book => ` 
+    const strHtmls = books.map(book => ` 
      <tr>
     <td>${book.title}</td>
     <td>${book.price}</td>
     <td class="action-buttons">
-        <button>Read</button>
-        <button onclick="onReadBook(event,'${book.id}')">Details</button>
+        <button onclick="onReadBook(event,'${book.id}')">Read</button>
         <button onclick="onUpdateBook(event,'${book.id}')">Update</button>
         <button onclick="onRemoveBook(event,'${book.id}')">Delete</button>
     </td>
@@ -65,8 +67,8 @@ function _saveBooks() {
     saveToStorage(book_dt, Gbooks)
 }
 
-function addBook(elInput,newPrice){
-    const newBook = _getBook(elInput.value,newPrice)
+function addBook(elInput, newPrice) {
+    const newBook = _getBook(elInput, newPrice)
     Gbooks.unshift(newBook)
     _saveBooks()
 }
