@@ -20,6 +20,7 @@ function onUpdateBook(ev, booId) {
     Gbooks[bookIdx].price = prompt('enter new price pls')
     render(Gbooks)
     showMessage('Book was successfully update.')
+    _saveBooks()
 }
 
 
