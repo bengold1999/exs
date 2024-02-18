@@ -2,7 +2,7 @@
 
 
 function onInit() {
-    render(Gbooks)
+    render()
 }
 
 
@@ -10,29 +10,57 @@ function onInit() {
 function onRemoveBook(ev, bookId) {
     ev.stopPropagation()
     removeBook(bookId)
-    render(Gbooks)
+    render()
     showMessage('Book was successfully deleted.')
 }
 
 function onUpdateBook(ev, booId) {
     ev.stopPropagation()
-    const bookIdx = Gbooks.findIndex(book => book.id = booId)
-    Gbooks[bookIdx].price = prompt('enter new price pls')
-    render(Gbooks)
+    const newPrice = +prompt('Enter a new price')
+    if (!newPrice) return alert('You must enter a new price')
+    updateBook(booId, newPrice)
+    renderBooks()
     showMessage('Book was successfully update.')
-    _saveBooks()
+    
+}
+
+function onSetFilterBy(elInput) {
+    const filterBy = elInput.value
+    setFilterBy(filterBy)
+
+    render()
+}
+function render() {
+    const books = getBooks()
+    const strHtmls = books.map(book => ` 
+     <tr>
+    <td>${book.title}</td>
+    <td>${book.price}</td>
+    <td class="action-buttons">
+        <button onclick="onReadBook(event,'${book.id}')">Read</button>
+        <button onclick="onUpdateBook(event,'${book.id}')">Update</button>
+        <button onclick="onRemoveBook(event,'${book.id}')">Delete</button>
+    </td>
+</tr>
+    `)
+
+    console.log(strHtmls.join(''))
+    const elRender = document.querySelector('tbody')
+    elRender.innerHTML = strHtmls.join('')
+    stats()
 }
 
 
 
 function onAddBook(ev) {
     ev.preventDefault()
-    const elInput = document.querySelector('.add')
-    if (!elInput.value) return
-    const newPrice = prompt('enter a price pls')
-    addBook(elInput.value, newPrice)
-    elInput.value = ''
-    render(Gbooks)
+    const title = prompt('Book title')
+    const price = +prompt('Book price')
+    const rating = +prompt('pls give rating 1-5')
+    // const imgUrl = prompt('Book image url')
+    if (!title || !price||rating<0||rating>5||!rating) return
+    addBook(title, price,rating)
+    render()
     showMessage('Book was successfully added.')
 }
 
@@ -50,23 +78,31 @@ function onReadBook(ev, todoId) {
     elBookDetails.showModal()
 }
 
-function Onsearch(elSearch) {
-    const value = elSearch.value.toLowerCase()
-    const filteredBooks = sBook(value)
-    render(filteredBooks)
-    // console.log(JSON.parse(titleSearch))
+// function Onsearch(elSearch) {
+//     const value = elSearch.value.toLowerCase()
+//     const filteredBooks = sBook(value)
+//     render(filteredBooks)
+//     // console.log(JSON.parse(titleSearch))
 
 
 
+// }
+function onResetFilter() {
+
+    setFilterBy('')
+    render()
+
+    // clean the inputs 
+    const elTitle = document.querySelector('.search')
+    elTitle.value = ""
 }
 
+// function clearSearch() {
+//     var elInput = document.querySelector('.search')
+//     elInput.value = ''
+//     render()
 
-function clearSearch() {
-    var elInput = document.querySelector('.search')
-    elInput.value = ''
-    if (elInput.value === '') render(Gbooks)
-
-}
+// }
 
 
 function stats() {

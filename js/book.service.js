@@ -1,53 +1,51 @@
 'use strict'
 var book_dt = 'book_dt'
 var Gbooks
-_getBooks()
-var emty = []
+_createBooks()
+// var emty = []
+var gFilterBy = ''
 
-function _getBooks() {
-    Gbooks = loadFromStorage(book_dt)
-    console.log('gbooks:', Gbooks)
-    if (Gbooks.length === 0) {
-        Gbooks = [
-            _getBook('jjk', 80),
-            _getBook('jjk s2', 90)
-        ]
-        _saveBooks()
-    }
+function getBooks() {
+    if (!gFilterBy) return Gbooks
+
+    var books = Gbooks.filter((book) =>
+        book.title.toLowerCase().includes(gFilterBy.toLowerCase())
+    )
+    return books
 }
 
 
-function _getBook(title, price) {
+
+function _createBooks() {
+    var books = loadFromStorage(book_dt)
+    if (!books || !books.length) {
+        books = [
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk s2', 90 , 3)
+        ]
+    }
+    Gbooks = books
+    _saveBooks()
+    return books
+}
+function getBook(bookId) {
+    const book = Gbooks.find((book) => book.id === bookId)
+    if (book) return book
+}
+
+function _createBook(title, price , rating) {
     return {
         id: makeId(),
         title,
         price,
-        imgUrl: 'png'
+        imgUrl: 'png',
+        rating
     }
 }
-function sBook(value) {
-    return Gbooks.filter((book) => book.title.toLowerCase().startsWith(value))
-}
+// function sBook(value) {
+//     return Gbooks.filter((book) => book.title.toLowerCase().startsWith(value))
+// }
 
-function render(books) {
-
-    const strHtmls = books.map(book => ` 
-     <tr>
-    <td>${book.title}</td>
-    <td>${book.price}</td>
-    <td class="action-buttons">
-        <button onclick="onReadBook(event,'${book.id}')">Read</button>
-        <button onclick="onUpdateBook(event,'${book.id}')">Update</button>
-        <button onclick="onRemoveBook(event,'${book.id}')">Delete</button>
-    </td>
-</tr>
-    `)
-
-    console.log(strHtmls.join(''))
-    const elRender = document.querySelector('tbody')
-    elRender.innerHTML = strHtmls.join('')
-    stats()
-}
 
 function showMessage(message) {
     const messageContainer = document.querySelector('.message')
@@ -69,16 +67,23 @@ function readBook(readId) {
     const read = Gbooks.find(read => read.id === readId)
     return read
 }
+function updateBook(bookId, newPrice) {
+    const book = getBook(bookId)
 
+    book.price = newPrice
+
+    _saveBooks()
+    return book
+}
 
 function _saveBooks() {
     saveToStorage(book_dt, Gbooks)
 }
 
 function addBook(elInput, newPrice) {
-    const newBook = _getBook(elInput, newPrice)
+    const newBook = _createBook(elInput, newPrice)
     Gbooks.unshift(newBook)
-    _saveBooks()
+    _saveBooks(book_dt, Gbooks)
 }
 
 function expensiveBook() {
@@ -88,7 +93,13 @@ function avgBook() {
     return Gbooks.filter(book => book.price > 80 && book.price < 200).length
 }
 function cheapBook() {
-    return Gbooks.filter(book => book.price < 80).length
+    return Gbooks.filter(book => book.price <= 80).length
+}
+function setFilterBy(filterBy) {
+    gFilterBy = filterBy
+}
+function getFilterBy() {
+    return gFilterBy
 }
 
 

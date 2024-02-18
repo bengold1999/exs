@@ -9,13 +9,12 @@
 <body onload="onInit()">
     <h1>Book shop</h1>
     <section>
-        <button onclick="onAddBook(event)">Add Book</button>
-        <input class="add" type="text" >
+        <input oninput="onSetFilterBy(this)" class="search" type="text">
+        <button onclick="onResetFilter()">clear</button>
     </section>
     <section>
-         <input oninput="Onsearch(this)" class="search" type="text">
-         <button onclick="clearSearch()">clear</button>
-    </section>
+        <button onclick="onAddBook(event)">Add Book</button>
+         </section>
     <table>
         <thead>
             <tr>
@@ -57,7 +56,7 @@
     </footer>
           
     <script src="js/storage_service.js"></script>
-        <script src="js/book.service.js"></script>
-        <script src="js/book.controller.js"></script>
+    <script src="js/book.service.js"></script>
+    <script src="js/book.controller.js"></script>
     </body>
 </html>
