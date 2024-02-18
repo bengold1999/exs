@@ -10,15 +10,26 @@
     <h1>Book shop</h1>
     <section>
         <button onclick="onResetFilter()">clear</button>
-        <span>search: </span><input oninput="onSetFilterBy(this)" class="search" type="text">
+        <span>search: </span><input oninput="onSetFilterBy()" class="search" type="text">
         <label>
             <span>Rating:</span>
-            <input type="range" min="0" max="5" value="2" class="range"
+            <input type="range" min="0" max="5" value="0" class="range"
                    onchange="this.title=this.value;onSetFilterBy()" />
         </label>
+  
+        
     </section>
     <section>
         <button onclick="onAddBook(event)">Add Book</button>
+        <select class="sort-list" onchange="onSetSortBy()">
+            <option value="">Select sort</option>
+            <option value="title">title</option>
+            <option value="price">price</option>
+            <option value="rating">rating</option>
+        </select>
+        <input oninput="onSetSortBy()" class="ascending" type="radio"  name="contact"  /><span>ascending</span>
+    
+        <input oninput="onSetSortBy()"  class="descending" type="radio"  name="contact"  /><span> descending</span>
          </section>
     <table>
         <thead>

@@ -1,7 +1,7 @@
 'use strict'
 const gQueryOptions = {
     filterBy: { title: '', Rating: 0 },
-    // sortBy: {},
+    sortBy: {}
     // page: { idx: 0, size: 3 }
 }
 
@@ -28,24 +28,26 @@ function onUpdateBook(ev, booId) {
 
 }
 
-function onSetFilterBy(elInput) {
-    // if(!elInput.value)elInput.value===0
-    const filterBy = elInput.value
-    if (!filterBy) return
-    console.log(filterBy)
-    setFilterBy(filterBy)
+function onSetFilterBy() {
     const elSearch = document.querySelector('.search')
+    // if(!elInput.value)elInput.value===0
+    const filterBy = elSearch.value
+    if (!filterBy) return
+    // console.log(filterBy)
+    setFilterBy(filterBy)
     const elRating = document.querySelector('.range')
+    // console.log(elRating)
 
     gQueryOptions.filterBy.title = elSearch.value
-    gQueryOptions.filterBy.Rating = elRating.value
-
+    gQueryOptions.filterBy.Rating = parseInt(elRating.value)
     // gQueryOptions.page.idx = 0
+    // console.log(gQueryOptions)
     // renderCars()
     render()
 }
 function render() {
-    const books = getBooks()
+    const books = getBooks(gQueryOptions)
+
     const strHtmls = books.map(book => ` 
      <tr>
     <td>${book.title}</td>
@@ -65,7 +67,25 @@ function render() {
     stats()
 }
 
+function onSetSortBy(){
+    const elSortBy = document.querySelector('.sort-list')
+    const elDir = document.querySelector('.ascending')
+    
 
+    const dir = elDir.checked ? -1 : 1
+
+   
+
+    if(elSortBy.value === 'title') {
+        gQueryOptions.sortBy = { title: dir }
+    } else if(elSortBy.value === 'price') {
+        gQueryOptions.sortBy = { price: dir }
+    }else if (elSortBy.value === 'rating'){
+        gQueryOptions.sortBy = { rating: dir }
+    }
+    // gQueryOptions.page.idx = 0
+    render()
+}
 
 function onAddBook(ev) {
     ev.preventDefault()
@@ -109,7 +129,9 @@ function onResetFilter() {
 
     // clean the inputs 
     const elTitle = document.querySelector('.search')
+    const elRating = document.querySelector('.range')
     elTitle.value = ""
+    elRating.value = 0
 }
 
 // function clearSearch() {

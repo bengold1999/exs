@@ -5,16 +5,25 @@ _createBooks()
 // var emty = []
 var gFilterBy = ''
 
-function getBooks() {
-    if (!gFilterBy) return Gbooks
+function getBooks(options) {
+    const books = _filterCars(options.filterBy)
 
-    var books = Gbooks.filter((book) =>
-        book.title.toLowerCase().includes(gFilterBy.toLowerCase())
-    )
+   
+    if(options.sortBy.price) { 
+        books.sort((book1, book2) => (book1.price - book2.price) * options.sortBy.price)
+    } else if(options.sortBy.title) {
+        books.sort((book1, book2) => (book1.title.localeCompare(book2.title)) * options.sortBy.title)
+    }else if(options.sortBy.rating) { 
+        books.sort((book1, book2) => (book1.rating - book2.rating) * options.sortBy.rating)
+    }
     return books
 }
 
-
+function _filterCars(filterBy) {
+    return Gbooks.filter((book) => 
+       book.title.includes(filterBy.title)||
+        book.rating >= filterBy.Rating)
+}
 
 function _createBooks() {
     var books = loadFromStorage(book_dt)
