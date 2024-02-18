@@ -1,8 +1,8 @@
 'use strict'
 const gQueryOptions = {
     filterBy: { title: '', Rating: 0 },
-    sortBy: {}
-    // page: { idx: 0, size: 3 }
+    sortBy: {},
+    page: { idx: 0, size: 5 }
 }
 
 function onInit() {
@@ -67,20 +67,20 @@ function render() {
     stats()
 }
 
-function onSetSortBy(){
+function onSetSortBy() {
     const elSortBy = document.querySelector('.sort-list')
     const elDir = document.querySelector('.ascending')
-    
+
 
     const dir = elDir.checked ? -1 : 1
 
-   
 
-    if(elSortBy.value === 'title') {
+
+    if (elSortBy.value === 'title') {
         gQueryOptions.sortBy = { title: dir }
-    } else if(elSortBy.value === 'price') {
+    } else if (elSortBy.value === 'price') {
         gQueryOptions.sortBy = { price: dir }
-    }else if (elSortBy.value === 'rating'){
+    } else if (elSortBy.value === 'rating') {
         gQueryOptions.sortBy = { rating: dir }
     }
     // gQueryOptions.page.idx = 0
@@ -98,6 +98,24 @@ function onAddBook(ev) {
     render()
     showMessage('Book was successfully added.')
 }
+function onNextPage() {
+    const totalPageCount = getTotalPageCount(gQueryOptions)
+    if(gQueryOptions.page.idx < totalPageCount - 1){
+        gQueryOptions.page.idx++
+    } else {
+        gQueryOptions.page.idx = 0
+    }
+    render()
+}
+
+function onPrevPage() {
+    gQueryOptions.page.idx--
+    if (gQueryOptions.page.idx) return
+
+    render()
+}
+
+
 
 function onReadBook(ev, todoId) {
     ev.stopPropagation()

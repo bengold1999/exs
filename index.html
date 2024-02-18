@@ -8,6 +8,10 @@
 </head>
 <body onload="onInit()">
     <h1>Book shop</h1>
+    <div>
+        <button title="Prev Page" onclick="onPrevPage()">Prev Page</button>
+        <button title="Next Page" onclick="onNextPage()">Next Page</button>
+    </div>
     <section>
         <button onclick="onResetFilter()">clear</button>
         <span>search: </span><input oninput="onSetFilterBy()" class="search" type="text">

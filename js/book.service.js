@@ -6,7 +6,7 @@ _createBooks()
 var gFilterBy = ''
 
 function getBooks(options) {
-    const books = _filterCars(options.filterBy)
+    const books = _filterBooks(options.filterBy)
 
    
     if(options.sortBy.price) { 
@@ -16,10 +16,11 @@ function getBooks(options) {
     }else if(options.sortBy.rating) { 
         books.sort((book1, book2) => (book1.rating - book2.rating) * options.sortBy.rating)
     }
-    return books
+    const startIdx = options.page.idx * options.page.size
+    return books.slice(startIdx, startIdx + options.page.size)
 }
 
-function _filterCars(filterBy) {
+function _filterBooks(filterBy) {
     return Gbooks.filter((book) => 
        book.title.includes(filterBy.title)||
         book.rating >= filterBy.Rating)
@@ -29,6 +30,19 @@ function _createBooks() {
     var books = loadFromStorage(book_dt)
     if (!books || !books.length) {
         books = [
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
+            _createBook('jjk', 80 , 5),
             _createBook('jjk', 80 , 5),
             _createBook('jjk s2', 90 , 3)
         ]
@@ -112,3 +126,7 @@ function getFilterBy() {
 }
 
 
+function getTotalPageCount(options) {
+    const books = _filterBooks(options.filterBy)
+    return Math.ceil(books.length / options.page.size)
+}
