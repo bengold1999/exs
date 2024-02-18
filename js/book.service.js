@@ -39,7 +39,7 @@ function _createBook(title, price , rating) {
         title,
         price,
         imgUrl: 'png',
-        rating
+        rating:rating|| getRandomIntInclusive(1,5)
     }
 }
 // function sBook(value) {
@@ -80,8 +80,8 @@ function _saveBooks() {
     saveToStorage(book_dt, Gbooks)
 }
 
-function addBook(elInput, newPrice) {
-    const newBook = _createBook(elInput, newPrice)
+function addBook(elInput, newPrice ,rating) {
+    const newBook = _createBook(elInput, newPrice,rating)
     Gbooks.unshift(newBook)
     _saveBooks(book_dt, Gbooks)
 }
@@ -100,18 +100,6 @@ function setFilterBy(filterBy) {
 }
 function getFilterBy() {
     return gFilterBy
-}
-
-
-
-function makeId(length = 5) {
-    var id = ''
-    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
-
-    for (var i = 0; i < length; i++) {
-        id += possible.charAt(Math.floor(Math.random() * possible.length))
-    }
-    return id
 }
 
 
