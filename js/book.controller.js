@@ -1,5 +1,9 @@
 'use strict'
-
+const gQueryOptions = {
+    filterBy: { title: '', Rating: 0 },
+    // sortBy: {},
+    // page: { idx: 0, size: 3 }
+}
 
 function onInit() {
     render()
@@ -21,13 +25,23 @@ function onUpdateBook(ev, booId) {
     updateBook(booId, newPrice)
     renderBooks()
     showMessage('Book was successfully update.')
-    
+
 }
 
 function onSetFilterBy(elInput) {
+    // if(!elInput.value)elInput.value===0
     const filterBy = elInput.value
+    if (!filterBy) return
+    console.log(filterBy)
     setFilterBy(filterBy)
+    const elSearch = document.querySelector('.search')
+    const elRating = document.querySelector('.range')
 
+    gQueryOptions.filterBy.title = elSearch.value
+    gQueryOptions.filterBy.Rating = elRating.value
+
+    // gQueryOptions.page.idx = 0
+    // renderCars()
     render()
 }
 function render() {
@@ -36,6 +50,7 @@ function render() {
      <tr>
     <td>${book.title}</td>
     <td>${book.price}</td>
+    <td>${book.rating}</td>
     <td class="action-buttons">
         <button onclick="onReadBook(event,'${book.id}')">Read</button>
         <button onclick="onUpdateBook(event,'${book.id}')">Update</button>
@@ -44,7 +59,7 @@ function render() {
 </tr>
     `)
 
-    console.log(strHtmls.join(''))
+    // console.log(strHtmls.join(''))
     const elRender = document.querySelector('tbody')
     elRender.innerHTML = strHtmls.join('')
     stats()
@@ -58,8 +73,8 @@ function onAddBook(ev) {
     const price = +prompt('Book price')
     const rating = +prompt('pls give rating 1-5')
     // const imgUrl = prompt('Book image url')
-    if (!title || !price||rating<0||rating>5||!rating) return
-    addBook(title, price,rating)
+    if (!title || !price || rating < 0 || rating > 5 || !rating) return
+    addBook(title, price, rating)
     render()
     showMessage('Book was successfully added.')
 }

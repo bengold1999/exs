@@ -39,7 +39,7 @@ function _createBook(title, price , rating) {
         title,
         price,
         imgUrl: 'png',
-        rating:rating|| getRandomIntInclusive(1,5)
+        rating
     }
 }
 // function sBook(value) {

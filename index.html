@@ -9,8 +9,13 @@
 <body onload="onInit()">
     <h1>Book shop</h1>
     <section>
-        <input oninput="onSetFilterBy(this)" class="search" type="text">
         <button onclick="onResetFilter()">clear</button>
+        <span>search: </span><input oninput="onSetFilterBy(this)" class="search" type="text">
+        <label>
+            <span>Rating:</span>
+            <input type="range" min="0" max="5" value="2" class="range"
+                   onchange="this.title=this.value;onSetFilterBy()" />
+        </label>
     </section>
     <section>
         <button onclick="onAddBook(event)">Add Book</button>
@@ -20,6 +25,7 @@
             <tr>
                 <th>Title</th>
                 <th>Price</th>
+                <th>Rating</th>
                 <th>Actions</th>
             </tr>
         </thead>
